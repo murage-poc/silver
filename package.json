@@ -3,10 +3,16 @@
   "version": "1.0.0",
   "private": "true",
   "description": "Project showcasing using dbmate",
+  "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
     "db:migrate": "dbmate $([[ -f ./.env ]] && echo '--env-file ./.env') up",
     "db:rollback": "dbmate $([[ -f ./.env ]] && echo '--env-file ./.env') rollback",
-    "db:cm": "dbmate $([[ -f ./.env ]] && echo '--env-file ./.env') new"
+    "db:cm": "dbmate $([[ -f ./.env ]] && echo '--env-file ./.env') new",
+    "db:generate:types": "[ -f ./.env ] && . ./.env; kysely-codegen --out-file src/db/schema.d.ts --default-schema=${DB_SCHEMA} --dialect=${DB_CONNECTION} --exclude-pattern='*.(migrations)'",
+    "generate": "pnpm run db:generate:types"
   },
   "license": "MIT",
   "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e",
@@ -16,6 +22,8 @@
     "pg": "^8.14.1"
   },
   "devDependencies": {
-    "kysely-codegen": "^0.18.3"
+    "kysely-codegen": "^0.18.3",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.2"
   }
 }
