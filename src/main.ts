@@ -1,21 +1,32 @@
 import { db } from "./db/db"
+import process from 'node:process';
 
-console.log("hello")
+(async function() {
+    console.log("Let use begin by trying to insert some users to the table");
 
-async function fetchJobs(){
+    //insert some users
+    const [insertResult]= await db.insertInto('users').values([
+        {
+            email: 'jennifer@gmail.com',
+            username: 'jennifer',
+            password: 'some password hash here',
+        },
+        {
+            email: 'Arnold@gmail.com',
+            username: 'arnold',
+            password: 'some password hash here',
+        }
+    ]).execute()
 
-  return  db.selectFrom()
-}
+    console.log(`Inserted ${insertResult.numInsertedOrUpdatedRows} users successfully`)
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
+    //select all users
+    const users = await db.selectFrom('users').selectAll().execute();
 
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+    console.log('Fetched users successfully')
+    console.log(users)
+    console.log('Demo done! Exiting ...')
+
+    process.exit(0);
+
+})();

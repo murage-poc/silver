@@ -5,9 +5,7 @@
   "description": "Project showcasing using dbmate",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "dev": "[ -f ./.env ] && . ./.env; vite-node src/main.ts",
     "db:migrate": "dbmate $([[ -f ./.env ]] && echo '--env-file ./.env') up",
     "db:rollback": "dbmate $([[ -f ./.env ]] && echo '--env-file ./.env') rollback",
     "db:cm": "dbmate $([[ -f ./.env ]] && echo '--env-file ./.env') new",
