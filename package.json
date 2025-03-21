@@ -11,7 +11,7 @@
     "db:migrate": "dbmate $([[ -f ./.env ]] && echo '--env-file ./.env') up",
     "db:rollback": "dbmate $([[ -f ./.env ]] && echo '--env-file ./.env') rollback",
     "db:cm": "dbmate $([[ -f ./.env ]] && echo '--env-file ./.env') new",
-    "db:generate:types": "[ -f ./.env ] && . ./.env; kysely-codegen --out-file src/db/schema.d.ts --default-schema=${DB_SCHEMA} --dialect=${DB_CONNECTION} --exclude-pattern='*.(migrations)'",
+    "db:generate:types": "[ -f ./.env ] && . ./.env; kysely-codegen --out-file src/db/schema.d.ts --default-schema=${DB_SCHEMA} --include-pattern=`${DB_SCHEMA}.*` --dialect=${DB_CONNECTION} --exclude-pattern='*.(migrations)'",
     "generate": "pnpm run db:generate:types"
   },
   "license": "MIT",
